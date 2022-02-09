@@ -1,0 +1,235 @@
+<mujoco model="franka_panda v200">
+<!-- =================================================
+    Copyright 2018 Vikash Kumar
+    Model   :: Franka (MuJoCoV2.0)
+    Author  :: Vikash Kumar (vikashplus@gmail.com)
+    source  :: https://github.com/vikashplus/franka_sim
+    License :: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+====================================================== -->
+<!--    <asset>-->
+<!--         <material name="table_mat" specular="0" shininess="0.5" reflectance="0" rgba="0.93 0.93 0.93 1"/>-->
+<!--        &lt;!&ndash; ceramic table texture and material&ndash;&gt;-->
+<!--        <texture file="../textures/ceramic.png" type="cube" name="tex-ceramic"/>-->
+<!--        <material name="table_ceramic" reflectance="0.0" shininess="0.0" specular="0.2" texrepeat="1 1" texture="tex-ceramic" />-->
+<!--        &lt;!&ndash; steel legs &ndash;&gt;-->
+<!--        <texture file="../textures/steel-brushed.png" type="cube" name="tex-steel-brushed"/>-->
+<!--        <material name="table_legs_metal" reflectance="0.8" shininess="0.8" texrepeat="1 1" texture="tex-steel-brushed" />-->
+<!--    </asset>-->
+    <equality>
+    <weld active="false" body1="wire1" body2="working_station" solimp="1 1 0.5" solref="0.01 0.3" />
+    </equality>
+
+    <include file="assets/basic_scene.xml"/>
+    <include file="assets/assets.xml"/>
+    <include file="assets/gripper_assets.xml"/>
+    <include file="assets/object_assets.xml"/>
+    <compiler meshdir=""/>
+
+    <size njmax="8000" nconmax="4000"/>
+
+    <worldbody>
+        <!--Robots-->
+        <body name='leftarm' pos='-0.2 0.5 0' euler='0 0 1.57'>
+        <include file="assets/chain0.xml"/>
+        </body>
+
+        <body name='righttarm' pos='1.2 0.5 0' euler='0 0 1.57'>
+        <include file="assets/chain1.xml"/>
+        </body>
+
+        <!--Wire-->
+        <body name="wire1" pos="0.228 0.49119426 0.58000699" quat="1 0 0 0">
+            <include file="assets/rope_expanded_short.xml"/>
+        </body>
+
+        <!--Table -->
+        <body pos="0.5 0.5 0.2" name="working_station">
+		    <body pos="0.0 0.0 0.0" name="table0">
+			    <geom size="0.5 0.3 0.2" type="box" mass="2000" group="0" name="table_collision" material="table_mat"/>
+			    <geom size="0.5 0.3 0.2" type="box" mass="1e-8" group="1" name="table_visual" material="table_mat"/>
+<!--                <geom pos="0.5 0.3 0.2" size="0.25 0.15 0.005" type="box" group="0" name="panel_collision" />-->
+<!--                <geom pos="0.5 0.3 0.2" size="0.25 0.15 0.005" type="box" conaffinity="0" contype="0" group="1" name="panel_visual" material="table_mat_gray"/>-->
+		    </body>
+
+            <body pos="0.0 -0.2 0.4">
+                <body pos="-0.4 0.1 -0.1" name="z_leg0">
+                    <geom size="0.02 0.02 0.1" type="box" mass="2000" group="0" name="leg0_collision" friction="1 0.005 0.0001"/>
+                    <geom size="0.02 0.02 0.1" type="box" mass="1e-8" conaffinity="0" contype="0" group="1" name="leg0_visual" material="table_legs_metal"/>
+                    <body pos="0.0 0.0 0.2" name="z_leg1">
+                        <geom size="0.02 0.02 0.1" type="box" mass="2000" group="0" name="leg1_collision" friction="1 0.005 0.0001"/>
+			            <geom size="0.02 0.02 0.1" type="box" mass="1e-8" conaffinity="0" contype="0" group="1" name="leg1_visual" material="table_legs_metal"/>
+                        <body pos="0.08 0.0 0.1" name="x_leg2">
+                            <geom size="0.1 0.02 0.02" type="box" mass="2000" group="0" name="leg2_collision" friction="1 0.005 0.0001"/>
+			                <geom size="0.1 0.02 0.02" type="box" mass="1e-8" conaffinity="0" contype="0" group="1" name="leg2_visual" material="table_legs_metal"/>
+                            <body pos="0.1 0.08 0.0" name="y_leg8">
+                                <geom size="0.02 0.1 0.02" type="box" mass="2000" group="0" name="leg8_collision" friction="1 0.005 0.0001"/>
+			                    <geom size="0.02 0.1 0.02" type="box" mass="1e-8" conaffinity="0" contype="0" group="1" name="leg8_visual" material="table_legs_metal"/>
+                            </body>
+                            <body pos="0.2 0.0 0.0" name="x_leg3">
+                                <geom size="0.1 0.02 0.02" type="box" mass="2000" group="0" name="leg3_collision" friction="1 0.005 0.0001"/>
+			                    <geom size="0.1 0.02 0.02" type="box" mass="1e-8" conaffinity="0" contype="0" group="1" name="leg3_visual" material="table_legs_metal"/>
+                                <body pos="0.2 0.0 0.0" name="x_leg4">
+                                    <geom size="0.1 0.02 0.02" type="box" mass="2000" group="0" name="leg4_collision" friction="1 0.005 0.0001"/>
+			                        <geom size="0.1 0.02 0.02" type="box" mass="1e-8" conaffinity="0" contype="0" group="1" name="leg4_visual" material="table_legs_metal"/>
+                                    <body pos="0.1 0.08 0.0" name="y_leg9">
+                                        <geom size="0.02 0.1 0.02" type="box" mass="2000" group="0" name="leg9_collision" friction="1 0.005 0.0001"/>
+			                        <geom size="0.02 0.1 0.02" type="box" mass="1e-8" conaffinity="0" contype="0" group="1" name="leg9_visual" material="table_legs_metal"/>
+                                    </body>
+                                    <body pos="0.2 0.0 0.0" name="x_leg5">
+                                        <geom size="0.1 0.02 0.02" type="box" mass="2000" group="0" name="leg5_collision" friction="1 0.005 0.0001"/>
+			                            <geom size="0.1 0.02 0.02" type="box" mass="1e-8" conaffinity="0" contype="0" group="1" name="leg5_visual" material="table_legs_metal"/>
+                                        <body pos="0.08 0.0 -0.1" name="z_leg6">
+                                            <geom size="0.02 0.02 0.1" type="box" mass="2000" group="0" name="leg6_collision" friction="1 0.005 0.0001"/>
+                                            <geom size="0.02 0.02 0.1" type="box" mass="1e-8" conaffinity="0" contype="0" group="1" name="leg6_visual" material="table_legs_metal"/>
+                                            <body pos="0.0 0.0 -0.2" name="z_leg7">
+                                                <geom size="0.02 0.02 0.1" type="box" mass="2000" group="0" name="leg7_collision" friction="1 0.005 0.0001"/>
+                                                <geom size="0.02 0.02 0.1" type="box" mass="1e-8" conaffinity="0" contype="0" group="1" name="leg7_visual" material="table_legs_metal"/>
+                                            </body>
+                                        </body>
+                                    </body>
+                                </body>
+                            </body>
+                        </body>
+                    </body>
+                </body>
+            </body>
+
+            <body name="insertation_hole_3" pos="0.0 -0.2 0.4" quat="0.7073883 0 0 0.7068252">
+                    <geom pos="0 -0.00665  0" size="0.008 0.00365  0.00875 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.2" group="0" condim="4" material="bmetal" />
+                    <geom pos="0.0 0 -0.00665" size="0.006 0.00625 0.0021 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="smetal" />
+                    <geom pos="0.0 0 0.00665" size="0.008 0.00625 0.0021 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="bmetal" />
+                    <geom pos="0 0.00665 0" size="0.008 0.00365 0.00875 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="bmetal" />
+                    <geom pos="0.008 0 0" size="0.0021 0.00875 0.00875 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="bmetal" />
+<!--                    <site rgba="1 0 0 1" size="0.001" pos="0.0108 0 0" name="handle_site"/>-->
+<!--                    <site rgba="1 0 0 1" size="0.0006" pos="0 0 0" name="center_site"/>-->
+            </body>
+
+            <!--panel-->
+            <body pos="-0.03 0.0 0.45" quat="0.7073883  0.7068252 0  0" name="panel0">
+<!--            <body pos="0.0 0.0 0.20025" quat="0 0 -0.7068252 0.7073883" name="panel0">-->
+                <geom size="0.3 0.15 0.005" type="box" group="0" name="panel_collision" />
+                <geom size="0.3 0.15 0.005" type="box" conaffinity="0" contype="0" group="1" name="panel_visual" material="table_mat_gray"/>
+                <body name="wire_clip_1" pos="0.0 0.05 0.00875">
+                    <geom name="square_nut_1_top" pos="0 -0.00665  0" size="0.006 0.0021  0.00875 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.2" group="0" condim="3" material="table_ceramic" />
+<!--                    <geom pos="0.0 0 -0.00665" size="0.006 0.00625 0.0021 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="smetal" />-->
+<!--                    <geom pos="0.0 0 0.00665" size="0.006 0.00625 0.0021 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="3" material="smetal" />-->
+                    <geom pos="0 0.00665 0" size="0.006 0.0021 0.00875 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="3" material="table_ceramic" />
+<!--                   <site rgba="1 0 0 1" size="0.001" pos="0.0108 0 0" name="handle_site"/>-->
+<!--                    <site rgba="1 0 0 1" size="0.0006" pos="0 0 0" name="center_site"/>-->
+                </body>
+                <body name="wire_clip_2" pos="-0.12 -0.07 0.00875">
+                    <geom pos="0 -0.00665  0" size="0.006 0.0021  0.00875 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.2" group="0" condim="4" material="table_ceramic" />
+<!--                    <geom pos="0.0 0 -0.00665" size="0.006 0.00625 0.0021 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="smetal" />-->
+<!--                    <geom pos="0.0 0 0.00665" size="0.006 0.00625 0.0021 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="smetal" />-->
+                    <geom pos="0 0.00665 0" size="0.006 0.0021 0.00875 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="table_ceramic" />
+<!--                    <site rgba="1 0 0 1" size="0.001" pos="0.0108 0 0" name="handle_site"/>-->
+<!--                    <site rgba="1 0 0 1" size="0.0006" pos="0 0 0" name="center_site"/>-->
+                </body>
+                <body name="wire_clip_3" pos="0.1 0.05 0.00875">
+                    <geom pos="0 -0.00665  0" size="0.006 0.0021  0.00875 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.2" group="0" condim="4" material="table_ceramic" />
+<!--                    <geom pos="0.0 0 -0.00665" size="0.006 0.00625 0.0021 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="smetal" />-->
+<!--                    <geom pos="0.0 0 0.00665" size="0.006 0.00625 0.0021 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="smetal" />-->
+                    <geom pos="0 0.00665 0" size="0.006 0.0021 0.00875 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="table_ceramic" />
+<!--                    <site rgba="1 0 0 1" size="0.001" pos="0.0108 0 0" name="handle_site"/>-->
+<!--                    <site rgba="1 0 0 1" size="0.0006" pos="0 0 0" name="center_site"/>-->
+                </body>
+                <body name="insertation_hole_0" pos="-0.25 -0.07 0.00875" quat="0.7073883 0 -0.7068252 0">
+                    <geom pos="0 -0.00665  0" size="0.008 0.00365  0.00875 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.2" group="0" condim="4" material="bmetal" />
+<!--                    <geom pos="0.0 0 -0.00665" size="0.008 0.00625 0.0021 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="smetal" />-->
+                    <geom pos="0.0 0 0.00665" size="0.008 0.00625 0.0021 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="bmetal" />
+                    <geom pos="0 0.00665 0" size="0.008 0.00365 0.00875 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="bmetal" />
+<!--                    <geom pos="0.008 0 0" size="0.0021 0.00875 0.00875 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="bmetal" />-->
+<!--                    <site rgba="1 0 0 1" size="0.001" pos="0.0108 0 0" name="handle_site"/>-->
+<!--                    <site rgba="1 0 0 1" size="0.0006" pos="0 0 0" name="center_site"/>-->
+<!--                    <body name="wire1" pos="-0.007 0.0 0.0" quat="0 0 1 0">-->
+<!--                        <include file="assets/rope_expanded_short.xml"/>-->
+<!--                    </body>-->
+                </body>
+                <body name="insertation_hole_1" pos="0.2 0.05 0.00875">
+                    <geom pos="0 -0.00665  0" size="0.008 0.00365  0.00875 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.2" group="0" condim="4" material="bmetal" />
+<!--                    <geom pos="0.0 0 -0.00665" size="0.006 0.00625 0.0021 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="smetal" />-->
+                    <geom pos="0.0 0 0.00665" size="0.008 0.00625 0.0021 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="bmetal" />
+                    <geom pos="0 0.00665 0" size="0.008 0.00365 0.00875 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="bmetal" />
+                    <geom pos="0.008 0 0" size="0.0021 0.00875 0.00875 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="bmetal" />
+<!--                    <site rgba="1 0 0 1" size="0.001" pos="0.0108 0 0" name="handle_site"/>-->
+<!--                    <site rgba="1 0 0 1" size="0.0006" pos="0 0 0" name="center_site"/>-->
+                </body>
+                <body name="insertation_hole_2" pos="-0.25 0.07 0.00875" quat="0.7073883 0 0 0.7068252">
+                    <geom pos="0 -0.00665  0" size="0.008 0.00365  0.00875 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.2" group="0" condim="4" material="bmetal" />
+<!--                    <geom pos="0.0 0 -0.00665" size="0.006 0.00625 0.0021 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="smetal" />-->
+                    <geom pos="0.0 0 0.00665" size="0.008 0.00625 0.0021 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="bmetal" />
+                    <geom pos="0 0.00665 0" size="0.008 0.00365 0.00875 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="bmetal" />
+                    <geom pos="0.008 0 0" size="0.0021 0.00875 0.00875 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="bmetal" />
+<!--                    <site rgba="1 0 0 1" size="0.001" pos="0.0108 0 0" name="handle_site"/>-->
+<!--                    <site rgba="1 0 0 1" size="0.0006" pos="0 0 0" name="center_site"/>-->
+                </body>
+            </body>
+        </body>
+
+        <!--Objects-->
+<!--        <body name="wire_free" pos="0.25 0.5 0.8" quat="0 0 1 0">-->
+<!--            <freejoint/>-->
+<!--                <include file="assets/rope_expanded.xml"/>-->
+<!--        </body>-->
+
+        <!--        </body>-->
+<!--        <body pos="0.3 0.5 0.7" name="leg1">-->
+<!--            <freejoint/>-->
+<!--                <geom size="0.02 0.02 0.02" type="box" mass="2000" group="0" name="leg1_collision"/>-->
+<!--			    <geom size="0.02 0.02 0.02" type="box" mass="1e-8" conaffinity="0" contype="0" group="1" name="leg1_visual" material="bmetal"/>-->
+<!--        </body>-->
+
+        <!--        <body name="hole_0" pos="0.75 0.5 1">-->
+<!--            <freejoint/>-->
+<!--            <body name="square_nut_0">-->
+<!--                <geom pos="-0.03325 0 0" size="0.0105 0.04375 0.03" type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.2" group="0" condim="4" material="bmetal" />-->
+<!--                <geom pos="0.0 0.03325 0" size="0.03125 0.0105 0.03" type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="bmetal" />-->
+<!--                <geom pos="0.0 -0.03325 0" size="0.03125 0.0105 0.03" type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="bmetal" />-->
+<!--                <geom pos="0.03325 0 0" size="0.0105 0.04375 0.03" type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="bmetal" />-->
+<!--&lt;!&ndash;                <geom pos="0.054 0 0" size="0.02525 0.015875 0.01" type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="bmetal" />&ndash;&gt;-->
+<!--&lt;!&ndash;                <site rgba="1 0 0 1" size="0.005" pos="0.054 0 0" name="handle_site"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                <site rgba="1 0 0 1" size="0.003" pos="0 0 0" name="center_site"/>&ndash;&gt;-->
+<!--            </body>-->
+<!--        </body>-->
+
+<!--        <body name="hole_1" pos="0.15 0.5 1">-->
+<!--            <freejoint/>-->
+<!--            <body name="square_nut_1">-->
+<!--                <geom pos="0 -0.03325  0" size="0.03 0.0105  0.04375 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.2" group="0" condim="4" material="bmetal" />-->
+<!--                <geom pos="0.0 0 -0.03325" size="0.03 0.03125 0.0105 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="bmetal" />-->
+<!--                <geom pos="0.0 0 0.03325" size="0.03 0.03125 0.0105 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="bmetal" />-->
+<!--                <geom pos="0 0.03325 0" size="0.03 0.0105 0.04375 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="bmetal" />-->
+<!--                <geom pos="0.03 0 0" size="0.0105 0.04375 0.04375 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="bmetal" />-->
+<!--&lt;!&ndash;                <geom pos="0.054 0 0" size="0.02525 0.015875 0.01" type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="bmetal" />&ndash;&gt;-->
+<!--&lt;!&ndash;                <site rgba="1 0 0 1" size="0.005" pos="0.054 0 0" name="handle_site"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                <site rgba="1 0 0 1" size="0.003" pos="0 0 0" name="center_site"/>&ndash;&gt;-->
+<!--            </body>-->
+<!--        </body>-->
+
+<!--        <body name="hole_2" pos="0.8 0.5 1">-->
+<!--            <freejoint/>-->
+<!--            <body name="square_nut_2">-->
+<!--                <geom pos="0 -0.00665  0" size="0.006 0.0021  0.00875 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.2" group="0" condim="4" material="smetal" />-->
+<!--                <geom pos="0.0 0 -0.00665" size="0.006 0.00625 0.0021 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="smetal" />-->
+<!--                <geom pos="0.0 0 0.00665" size="0.006 0.00625 0.0021 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="smetal" />-->
+<!--                <geom pos="0 0.00665 0" size="0.006 0.0021 0.00875 " type="box" solimp="0.998 0.998 0.001" solref="0.02 1" density="100" friction="0.95 0.3 0.1" group="0" condim="4" material="smetal" />-->
+<!--                <site rgba="1 0 0 1" size="0.001" pos="0.0108 0 0" name="handle_site"/>-->
+<!--                <site rgba="1 0 0 1" size="0.0006" pos="0 0 0" name="center_site"/>-->
+<!--            </body>-->
+<!--        </body>-->
+
+<!--        <body pos="0.5 0.5 0.6" name="panel" >-->
+<!--            <freejoint/>-->
+<!--&lt;!&ndash;            <geom pos="0 0 0" size="0.4 0.4 0.4" type="box" group="0" name="table_collision" friction="1 0.005 0.0001"/>&ndash;&gt;-->
+<!--&lt;!&ndash;            <geom pos="0 0 0" size="0.4 0.4 0.4" type="box" conaffinity="0" contype="0" group="1" name="table_visual" material="table_ceramic"/>&ndash;&gt;-->
+<!--            <geom pos="0 0 0" size="0.25 0.15 0.005" type="box" group="0" name="panel_collision" />-->
+<!--            <geom pos="0 0 0" size="0.25 0.15 0.005" type="box" conaffinity="0" contype="0" group="1" name="panel_visual" material="table_mat_gray"/>-->
+
+
+
+    </worldbody>
+
+    <include file='assets/actuator0.xml'/>
+    <include file='assets/actuator1.xml'/>
+
+</mujoco>
